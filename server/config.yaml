@@ -16,11 +16,6 @@ trafficStats:
   listen: :9999
   secret: 25EasonChan
 
-obfs:
-  type: salamander
-  salamander:
-    password: 25EasonChan
-
 # QUIC transport optimization
 # Increase stream/connection receive windows for higher throughput
 quic:
@@ -32,6 +27,9 @@ quic:
 # Use BBR congestion control instead of Brutal
 # Clients don't need to declare bandwidth
 ignoreClientBandwidth: true
+
+# Note: obfs (salamander) is removed to avoid ISP UDP block.
+# Standard TLS masquerading is used instead.
 
 masquerade:
   type: proxy

@@ -1,0 +1,42 @@
+# Hysteria2 Server Configuration
+# Optimized for high throughput with QUIC buffer tuning
+# Requires kernel parameters from ../optimize/sysctl-hysteria.conf
+
+listen: :443
+
+tls:
+  cert: /etc/hysteria/self-signed.crt
+  key: /etc/hysteria/self-signed.key
+
+auth:
+  type: password
+  password: 25EasonChan
+
+trafficStats:
+  listen: :9999
+  secret: 25EasonChan
+
+obfs:
+  type: salamander
+  salamander:
+    password: 25EasonChan
+
+# QUIC transport optimization
+# Increase stream/connection receive windows for higher throughput
+quic:
+  initStreamReceiveWindow: 8388608
+  maxStreamReceiveWindow: 8388608
+  initConnReceiveWindow: 20971520
+  maxConnReceiveWindow: 20971520
+
+# Use BBR congestion control instead of Brutal
+# Clients don't need to declare bandwidth
+ignoreClientBandwidth: true
+
+masquerade:
+  type: proxy
+  proxy:
+    url: https://ruanyifeng.com/
+    rewriteHost: true
+  listenHTTPS: :443
+  forceHTTPS: true
